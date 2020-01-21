@@ -1,14 +1,20 @@
-def pick_capital():
+import random
+
+def pick_capital(capital):
     '''
     Picks a random European capital
 
     Returns:
     str: The name of European capital
     '''
-    pass
+    lines = open('/home/judi/Codecool/just-hang-it/cities.txt').read().splitlines()
+    return random.choice(lines)
+    
+print(pick_capital('/home/judi/Codecool/just-hang-it/cities.txt'))
 
 
 def get_hashed(word):
+    
     '''
     Generates a password based on the word with dashes instead of letters
     Keeps whitespaces undashed.
