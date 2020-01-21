@@ -1,3 +1,6 @@
+import random
+
+
 def pick_capital():
     '''
     Picks a random European capital
@@ -5,8 +8,8 @@ def pick_capital():
     Returns:
     str: The name of European capital
     '''
-    pass
-
+    
+        
 
 def get_hashed(word):
     '''
@@ -19,7 +22,11 @@ def get_hashed(word):
     Returns:
     str: The hashed password
     '''
-    pass
+    word = list(pick_capital())
+    hashed = []
+    for i in hashed:
+        hashed += '_'
+    return hashed
 
 
 def uncover(hashed_password, password, letter):
@@ -89,7 +96,9 @@ def get_input():
 
 
 def main():
-    pass
+    pick_capital()
+    get_hashed('')
+    return
 
 if __name__ == '__main__':
     main()
