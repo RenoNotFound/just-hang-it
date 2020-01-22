@@ -1,5 +1,6 @@
 import random
 
+
 def pick_capital():
     '''
     Picks a random European capital
@@ -26,10 +27,8 @@ def get_hashed(word):
     str: The hashed password
     '''
     hashed_cap = ['_'] * len(word)
-    # list(word)
     return hashed_cap
 
-# print(get_hashed(pick_capital()))
 
 def uncover(hashed_password, password, letter):
     '''
@@ -43,17 +42,10 @@ def uncover(hashed_password, password, letter):
     Returns:
     str: The hashed password with uncovered letter
     '''
-    # if letter in password:
-    #     print("Correct", letter)
     for i, x in enumerate(password):
         if x == letter:
             hashed_password[i] = letter
-    # else:
-    #     print('')
     return hashed_password
-
-
-
 
 
 def update(used_letters, letter):
