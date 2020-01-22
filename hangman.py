@@ -1,20 +1,20 @@
 import random
 
-def pick_capital(capital):
+def pick_capital():
     '''
     Picks a random European capital
 
     Returns:
     str: The name of European capital
     '''
-    lines = open('/home/judi/Codecool/just-hang-it/cities.txt').read().splitlines()
+    file_path = 'cities.txt'
+    textfile = open(file_path)
+    lines = textfile.read().splitlines()
     return random.choice(lines)
-    
-print(pick_capital('/home/judi/Codecool/just-hang-it/cities.txt'))
 
 
 def get_hashed(word):
-    
+
     '''
     Generates a password based on the word with dashes instead of letters
     Keeps whitespaces undashed.
@@ -25,8 +25,11 @@ def get_hashed(word):
     Returns:
     str: The hashed password
     '''
-    pass
+    hashed_cap = ['_'] * len(word)
+    # list(word)
+    return hashed_cap
 
+# print(get_hashed(pick_capital()))
 
 def uncover(hashed_password, password, letter):
     '''
@@ -40,7 +43,17 @@ def uncover(hashed_password, password, letter):
     Returns:
     str: The hashed password with uncovered letter
     '''
-    pass
+    # if letter in password:
+    #     print("Correct", letter)
+    for i, x in enumerate(password):
+        if x == letter:
+            hashed_password[i] = letter
+    # else:
+    #     print('')
+    return hashed_password
+
+
+
 
 
 def update(used_letters, letter):
@@ -91,11 +104,34 @@ def get_input():
     Returns:
     str: The validated input
     '''
-    pass
+    letter = input("Try to guess it!: ").upper()
+    alphabet = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
+    while letter not in alphabet:
+        print("Please use only single letters.")
+        letter = input("Try to guess it!: ")
+    return letter
 
 
 def main():
-    pass
+    
+    print("Welcome to Hangman!")
+    print("Enter 'start' to start the game")
+    print("Enter 'quit' to end the program")
+    user_input = input(": ")
+    cap = pick_capital()
+    hashed_cap = get_hashed(cap)
+    print("A randomized European city has been selected.")
+
+    while True:
+        if user_input == "quit":
+            break
+        elif user_input == "start":
+            print(' '.join([x + ' ' for x in hashed_cap]))
+            letter = get_input()
+            uncover(hashed_cap, cap, letter)
+
+    print(uncover(hashed_cap, cap, letter))
+
 
 if __name__ == '__main__':
     main()
