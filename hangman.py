@@ -59,7 +59,10 @@ def update(used_letters, letter):
     Returns:
     list: The updated list of already used letters
     '''
-    pass
+
+    used_letters.append(letter)
+    return used_letters
+
 
 
 def is_win(hashed_password, password):
@@ -112,6 +115,7 @@ def main():
     user_input = input(": ")
     cap = pick_capital()
     hashed_cap = get_hashed(cap)
+    used_letters = []
     print("A randomized European city has been selected.")
 
     while True:
@@ -121,7 +125,9 @@ def main():
             print(' '.join([x + ' ' for x in hashed_cap]))
             letter = get_input()
             uncover(hashed_cap, cap, letter)
-
+            if letter not in cap:
+                update(used_letters, letter)
+                print("Used letters: " + str(used_letters).strip("[]").replace("'", ""))
     print(uncover(hashed_cap, cap, letter))
 
 
