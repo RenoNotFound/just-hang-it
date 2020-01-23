@@ -115,10 +115,9 @@ def get_input():
     Returns:
     str: The validated input
     '''
-    alphabet = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
+    alphabet = " AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
     letter = input("Try to guess it!: ").upper()
     while not checkChars(letter, alphabet):
-    # while letter not in alphabet:
         print("Please use only letters.")
         letter = input("Try to guess it!: ").upper()
     return letter
@@ -199,7 +198,7 @@ def hangman_hangs(lifepoint):
 def main():
 
     starting_screen()
-    user_input = input(": ").lower()
+    user_input = input(": ")
     cap = pick_capital()
     hashed_cap = get_hashed(cap)
     used_letters = []
@@ -207,9 +206,9 @@ def main():
     guessed = False
 
     while life > 0 and guessed == False:
-        if user_input == "quit":
+        if user_input.lower() == "quit":
             break
-        elif user_input == "start":
+        elif user_input.lower() == "start":
             hangman_hangs(life)
             print(f'You have {life} tries left')
             print(' '.join([x + ' ' for x in hashed_cap]))
