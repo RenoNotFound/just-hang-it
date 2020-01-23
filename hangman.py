@@ -26,8 +26,14 @@ def get_hashed(word):
     Returns:
     str: The hashed password
     '''
-    hashed_cap = ['_'] * len(word)
-    return hashed_cap
+    # hashed_cap = ['_'] * len(word)
+    hashed_cap = ""
+    for i, x in enumerate(word):
+        if x == " ":
+            hashed_cap = hashed_cap + " "
+        else:
+            hashed_cap = hashed_cap + "_"
+    return list(hashed_cap)
 
 def uncover(hashed_password, password, letter):
     '''
@@ -109,12 +115,19 @@ def get_input():
     Returns:
     str: The validated input
     '''
+    alphabet = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
     letter = input("Try to guess it!: ").upper()
-    while letter.isnumeric():
+    while not checkChars(letter, alphabet):
+    # while letter not in alphabet:
         print("Please use only letters.")
-        letter = input("Try to guess it!: ")
+        letter = input("Try to guess it!: ").upper()
     return letter
 
+def checkChars(word, alphabet):
+    for letter in word:
+        if letter not in alphabet:
+            return False
+    return True
 
 def starting_screen():
     print("Welcome to Hangman!")
@@ -186,8 +199,7 @@ def hangman_hangs(lifepoint):
 def main():
 
     starting_screen()
-    user_input = input(": ")
-    alphabet = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz'
+    user_input = input(": ").lower()
     cap = pick_capital()
     hashed_cap = get_hashed(cap)
     used_letters = []
@@ -202,13 +214,13 @@ def main():
             print(f'You have {life} tries left')
             print(' '.join([x + ' ' for x in hashed_cap]))
             letter = get_input()
+            os.system('clear')
             uncover(hashed_cap, cap, letter)
             if len(letter) == 1:
-                if letter not in alphabet:
-                    print('Please use only letters.')
-                elif letter in used_letters:
+                if letter in used_letters:
                     print('You have already guessed that letter')
-                elif (str(hashed_cap).strip("[]").replace("'", "").replace(",", "").replace(" ","") == str(cap)):
+                    print("Used letters: " + str(used_letters).strip("[]").replace("'", ""))
+                elif (str(hashed_cap).strip("[]").replace("'", "").replace(",", "").replace(" ","") == str(cap).replace(" ", "")):
                     is_win(hashed_cap, cap)
                     print(str(hashed_cap).strip("[]").replace("'", "").replace(",", " "))
                     print("You won!")
@@ -216,12 +228,13 @@ def main():
                     break
                 elif letter not in cap:
                     update(used_letters, letter)
-                    print('Wrong guess!')
+                    print('Oooopsie! Wrong guess!')
                     print("Used letters: " + str(used_letters).strip("[]").replace("'", ""))
                     life -= 1
                     is_loose(life)
                 else:
                     print('You are doing great. Keep guessing!')
+                    print("Used letters: " + str(used_letters).strip("[]").replace("'", ""))
             elif len(letter) == len(cap):
                 if letter == cap:
                     print("  ".join(cap))
