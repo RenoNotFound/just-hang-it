@@ -1,5 +1,5 @@
 import random
-
+import os
 
 def pick_capital():
     '''
@@ -28,7 +28,6 @@ def get_hashed(word):
     '''
     hashed_cap = ['_'] * len(word)
     return hashed_cap
-
 
 def uncover(hashed_password, password, letter):
     '''
@@ -91,6 +90,13 @@ def is_loose(life_points):
     bool: True if life point is equal 0, False otherwise
     '''
     if life_points == 0:
+        print("_________")
+        print("|	|")
+        print("|	O")
+        print("|      \|/")
+        print("|R.I.P. |")
+        print("|      / \ ")
+        print("|________")
         print("Oops, looks like you just died! Sad story :(")
     else:
         return life_points
@@ -110,16 +116,76 @@ def get_input():
     return letter
 
 
-def clean_screen():
-    import os
-    os.system('clear')
-
-
-def main():
-
+def starting_screen():
     print("Welcome to Hangman!")
+    print("A randomized European city will be selected for you to guess.")
     print("Enter 'start' to start the game")
     print("Enter 'quit' to end the program")
+
+def hangman_wins():
+        print("_________")
+        print("|	|")
+        print("|	    ")
+        print("|              O         Thank you clever hooman! ")
+        print("|             \|/   ")
+        print("|              |")
+        print("|________     / \ ")
+
+def hangman_hangs(lifepoint):
+
+    if lifepoint == 6:
+        print("_________")
+        print("|	|")
+        print("|")
+        print("|")
+        print("|")
+        print("|")
+        print("|________")
+    if lifepoint == 5:
+        print("_________")
+        print("|	|")
+        print("|	O    what's happening? ")
+        print("|")
+        print("|")
+        print("|")
+        print("|________")
+    if lifepoint == 4:
+        print("_________")
+        print("|	|")
+        print("|	O    oh snap ")
+        print("|       |")
+        print("|       |")
+        print("|")
+        print("|________")
+    if lifepoint == 3:
+        print("_________")
+        print("|	|")
+        print("|	O    stop it pls ")
+        print("|      \|")
+        print("|       |")
+        print("|")
+        print("|________")
+    if lifepoint == 2:
+        print("_________")
+        print("|	|")
+        print("|	O    stop torturing me!!!! ")
+        print("|      \|/")
+        print("|       |")
+        print("|")
+        print("|________")
+    if lifepoint == 1:
+        print("_________")
+        print("|	|")
+        print("|	O    can't breathe lol ")
+        print("|      \|/")
+        print("|       |")
+        print("|      / ")
+        print("|________")
+        
+        
+def main():
+
+    starting_screen()
     user_input = input(": ")
     alphabet = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz'
     cap = pick_capital()
@@ -127,12 +193,12 @@ def main():
     used_letters = []
     life = 6
     guessed = False
-    print("A randomized European city has been selected.")
 
     while life > 0 and guessed == False:
         if user_input == "quit":
             break
         elif user_input == "start":
+            hangman_hangs(life)
             print(f'You have {life} tries left')
             print(' '.join([x + ' ' for x in hashed_cap]))
             letter = get_input()
@@ -146,6 +212,7 @@ def main():
                     is_win(hashed_cap, cap)
                     print(str(hashed_cap).strip("[]").replace("'", "").replace(",", " "))
                     print("You won!")
+                    hangman_wins()
                     break
                 elif letter not in cap:
                     update(used_letters, letter)
@@ -159,6 +226,7 @@ def main():
                 if letter == cap:
                     print("  ".join(cap))
                     print('Well done, you have guessed the word!')
+                    hangman_wins()
                     guessed = True
                 else:
                     print('Sorry, you guessed the wrong word! :(')
@@ -171,7 +239,8 @@ def main():
                 is_loose(life)
         else:
             print('Invalid input!')
-
+            starting_screen()
+            user_input = input(": ")
 
 if __name__ == '__main__':
     main()
